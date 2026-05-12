@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СТО Кокшетау — поиск автосервисов</title>
+    <link rel="stylesheet" href="Sto.css">
+</head>
+<body>
+
+    <div class="header-banner">
+        <h1>Автосервисы Кокшетау</h1>
+        <p>Найдите лучшее СТО для вашего автомобиля</p>
+        
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Какая услуга нужна? (например: замена масла, геометрия)...">
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="stoGrid" class="sto-grid">
+            </div>
+    </div>
+
+    <script>
+        // Реальные данные СТО Кокшетау
+        const stoData = [
+            { name: "Master Drive", address: "ул. Ауельбекова, 170в", services: "Диагностика, ходовая, двигатель", phone: "+7 (7162) 33-77-77" },
+            { name: "BBS Автокомплекс", address: "ул. Байкена Ашимова, 229", services: "Геометрия, развал-схождение, ремонт", phone: "+7 (701) 555-12-34" },
+            { name: "Vita-Avto", address: "ул. Шокана Уалиханова, 41", services: "Замена масла, фильтры, тех. жидкости", phone: "+7 (705) 444-00-11" },
+            { name: "4 Брата", address: "ул. Жамбыла Жабаева, 40", services: "Шиномонтаж, ходовая, мелкосрочный ремонт", phone: "+7 (777) 111-22-33" },
+            { name: "TORO", address: "ул. Жамбыла Жабаева, 175а/1", services: "Кузовной ремонт, покраска, полировка", phone: "+7 (776) 999-88-77" },
+            { name: "Tau", address: "ул. Ахмета Байтурсынова, 113", services: "Электрика, диагностика, стартеры", phone: "+7 (775) 300-40-50" }
+        ];
+
+        function renderCards(filter = "") {
+            const grid = document.getElementById('stoGrid');
+            grid.innerHTML = "";
+            
+            const filtered = stoData.filter(sto => 
+                sto.services.toLowerCase().includes(filter.toLowerCase()) || 
+                sto.name.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            filtered.forEach(sto => {
+                grid.innerHTML += `
+                    <div class="card">
+                        <h3>${sto.name}</h3>
+                        <p class="address">📍 ${sto.address}</p>
+                        <p class="services"><strong>Услуги:</strong> ${sto.services}</p>
+                        <p class="phone">📞 ${sto.phone}</p>
+                    </div>
+                `;
+            });
+        }
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            renderCards(e.target.value);
+        });
+
+        renderCards(); // Показать все при загрузке
+    </script>
+</body>
+</html>
